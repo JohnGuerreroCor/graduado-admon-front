@@ -1,0 +1,61 @@
+<div id="content-wrap" class="container mt-3 mb-5 text-center" #target>
+  <div class="card rounded-2 p-0 shadow-sm mt-5">
+    <div
+      class="card-header ml-4 mb-3 mr-4 cursor-select"
+      [routerLink]="['/inicio']"
+      routerLinkActive="router-link-active"
+    >
+      <h4 class="font-usco-default">Situación laboral</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <fieldset class="scheduler-border shadow-sm">
+            <legend class="scheduler-border font-usco-vt">
+              Datos de contacto
+            </legend>
+            <div
+              class="row"
+              *ngFor="let respuestas of listadoRespuestas; let i = index"
+            >
+              <div class="col text-left">
+                <div class="form-group">
+                  <small class="font-usco-bl font-usco-default font-weight-bold"
+                    >{{ i + 1 }}).{{ respuestas.pregunta }}</small
+                  ><br />
+                  <br />
+                  <mat-form-field
+                    class="example-full-width"
+                    appearance="outline"
+                  >
+                    <input matInput [value]="respuestas.respuesta" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      <!--  <div class="row">
+        <div class="col">
+          <button
+            class="btn btn-success mr-2"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="guardar"
+          >
+            <i class="fa-solid fa-floppy-disk"></i> Guardar
+          </button>
+          <button
+            class="btn btn-warning"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="cancelar"
+          >
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>

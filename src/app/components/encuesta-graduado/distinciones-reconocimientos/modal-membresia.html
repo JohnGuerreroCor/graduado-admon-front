@@ -1,0 +1,121 @@
+<div mat-dialog-title style="background-color: #5c0e12">
+  <div class="row pb-4">
+    <div class="col">
+      <h5 class="text-white">
+        <i class="fa-solid fa-circle-info"></i> Membresías
+      </h5>
+    </div>
+    <div class="col text-right font-weight-bold mr-4 text-white">
+      <i class="fa-solid fa-xmark" mat-dialog-close></i>
+    </div>
+  </div>
+</div>
+<mat-dialog-content>
+  <div class="row mt-5">
+    <div class="col pl-4 pr-4">
+      <form>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Entidad</mat-label>
+                <input readonly matInput type="text" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Tipo</mat-label>
+                <input readonly matInput type="text" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Ámbito</mat-label>
+                <mat-select>
+                  <mat-option>documento.tipoNombre</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Fecha (DD/MM/AAAA)</mat-label>
+                <input readonly matInput type="text" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>País</mat-label>
+                <mat-select>
+                  <mat-option>Si</mat-option>
+                  <mat-option>No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Departamento</mat-label>
+                <mat-select>
+                  <mat-option>Si</mat-option>
+                  <mat-option>No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Ciudad</mat-label>
+                <mat-select>
+                  <mat-option>Si</mat-option>
+                  <mat-option>No</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Título</mat-label>
+                <input readonly matInput type="text" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row text-right p-2">
+    <div class="col">
+      <button class="btn btn-usco-vt" mat-dialog-close>
+        <i class="fa-solid fa-plus"></i> Agregar membresía
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>

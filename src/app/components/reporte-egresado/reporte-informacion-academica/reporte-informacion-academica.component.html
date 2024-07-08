@@ -1,0 +1,623 @@
+<div id="content-wrap" class="mt-3 mb-5 text-center" #target>
+  <div class="card rounded-2 p-0 shadow-sm mt-5 mb-5">
+    <div
+      class="card-header ml-4 mb-3 mr-4 cursor-select"
+      [routerLink]="['/reportes']"
+      routerLinkActive="router-link-active"
+    >
+      <h4 class="font-usco-default">Reporte otros estudios realizados</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <form class="pl-4 pr-4">
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Rango de fechas
+              </legend>
+              <div class="row mt-4">
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      color="accent"
+                      class="example-full-width custom-input"
+                      appearance="outline"
+                    >
+                      <mat-label>Fecha de respuesta inicial</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker1"
+                        [(ngModel)]="fechaInicioAcademico"
+                        name="fechaInicioAcademico"
+                      />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker1"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker1 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      color="accent"
+                      class="example-full-width custom-input"
+                      appearance="outline"
+                    >
+                      <mat-label>Fecha de respuesta final</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker2"
+                        [(ngModel)]="fechaFinAcademico"
+                        name="fechaFinAcademico"
+                      />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker2"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-2 mt-2 text-center">
+                  <button
+                    class="btn btn-info"
+                    [disabled]="!fechaInicioAcademico || !fechaFinAcademico"
+                    (click)="obtenerReporteRegistroEducativo()"
+                  >
+                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">Resultados</legend>
+              <div class="row ml-5 mr-5 pl-5 pr-5">
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>Campo de búsqueda</mat-label>
+                      <input
+                        matInput
+                        (keyup)="filtrarRegistroEducativo($event)"
+                        #input
+                        maxlength="50"
+                        type="text"
+                        required
+                      />
+                      <button matSuffix mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                      </button>
+                      <mat-hint align="end"
+                        >{{ input.value.length }}/50</mat-hint
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <table
+                mat-table
+                [dataSource]="dataSourceRegistroEducativo"
+                class="table"
+              >
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef>N°</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    class="font-sm-usco"
+                  >
+                    {{
+                      dataSourceRegistroEducativo.filteredData.indexOf(
+                        element
+                      ) + 1
+                    }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef>Egresado</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.personaNombre | uppercase }}
+                    {{ element.personaApellido | uppercase }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="estudio">
+                  <th mat-header-cell *matHeaderCellDef>Estudio realizado</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.titulo | uppercase }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="nivel">
+                  <th mat-header-cell *matHeaderCellDef>Nivel académico</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.nivelAcademico | uppercase }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="fecha">
+                  <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.fechaFin | date : "dd/MM/yyyy" }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="entidad">
+                  <th mat-header-cell *matHeaderCellDef>Entidad</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.institucion | uppercase }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="titulo">
+                  <th mat-header-cell *matHeaderCellDef>Titulo obtenido</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    <span *ngIf="element.finalizado == 1">SI</span>
+                    <span *ngIf="element.finalizado == 2">NO</span>
+                  </td>
+                </ng-container>
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumnsRegistroEducativo"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="
+                    let row;
+                    columns: displayedColumnsRegistroEducativo
+                  "
+                ></tr>
+              </table>
+              <div *ngIf="!noInformacionAcademico" class="row text-center mt-3">
+                <div class="col">
+                  <h6 class="font-usco-default font-usco-gr">
+                    Espacio para la visualización de la información.
+                  </h6>
+                </div>
+              </div>
+              <div *ngIf="!precargaAcademico" class="row text-center mt-3">
+                <div class="col">
+                  <img src="assets/precarga-usco.gif" alt="USCO" />
+                </div>
+              </div>
+              <div *ngIf="!precargaAcademico" class="row text-center mt-3 mb-3">
+                <div class="col">
+                  <h5 class="font-usco-default font-usco-gr">
+                    Estamos procesando la información
+                    <span
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  </h5>
+                </div>
+              </div>
+              <mat-paginator
+                #MatPaginatorRegistroEducativo="matPaginator"
+                [pageSizeOptions]="[5, 10, 15]"
+                showFirstLastButtons
+              ></mat-paginator>
+              <div class="row">
+                <div class="col text-right">
+                  <button
+                    class="btn btn-success"
+                    [disabled]="(dataRegistroEducativo | json) == '[]'"
+                    (click)="exportToExcelRegistroEducativo()"
+                  >
+                    <i class="fa-solid fa-download"></i> Descargar reporte
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card rounded-2 p-0 shadow-sm mt-5 mb-5">
+    <div
+      class="card-header ml-4 mb-3 mr-4 cursor-select"
+      [routerLink]="['/reportes']"
+      routerLinkActive="router-link-active"
+    >
+      <h4 class="font-usco-default">Reporte idiomas</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <form class="pl-4 pr-4">
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Rango de fechas
+              </legend>
+              <div class="row mt-4">
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      color="accent"
+                      class="example-full-width custom-input"
+                      appearance="outline"
+                    >
+                      <mat-label>Fecha de respuesta inicial</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker3"
+                        [(ngModel)]="fechaInicioIdioma"
+                        name="fechaInicioIdioma"
+                      />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker3"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker3 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      color="accent"
+                      class="example-full-width custom-input"
+                      appearance="outline"
+                    >
+                      <mat-label>Fecha de respuesta final</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker4"
+                        [(ngModel)]="fechaFinIdioma"
+                        name="fechaFinIdioma"
+                      />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker4"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker4 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-2 mt-2 text-center">
+                  <button
+                    class="btn btn-info"
+                    [disabled]="!fechaInicioIdioma || !fechaFinIdioma"
+                    (click)="obtenerReporteIdiomas()"
+                  >
+                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">Resultados</legend>
+              <div class="row ml-5 mr-5 pl-5 pr-5">
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>Campo de búsqueda</mat-label>
+                      <input
+                        matInput
+                        (keyup)="filtrarIdiomas($event)"
+                        #input
+                        maxlength="50"
+                        type="text"
+                        required
+                      />
+                      <button matSuffix mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                      </button>
+                      <mat-hint align="end"
+                        >{{ input.value.length }}/50</mat-hint
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <table mat-table [dataSource]="dataSourceIdioma" class="table">
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef>N°</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    class="font-sm-usco"
+                  >
+                    {{ dataSourceIdioma.filteredData.indexOf(element) + 1 }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef>Egresado</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.personaNombre }} {{ element.personaApellido }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="idioma">
+                  <th mat-header-cell *matHeaderCellDef>Idioma</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.nombre }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="conversacion">
+                  <th mat-header-cell *matHeaderCellDef>Conversación</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.conversacion }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="escritura">
+                  <th mat-header-cell *matHeaderCellDef>Escritura</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.escritura }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="lectura">
+                  <th mat-header-cell *matHeaderCellDef>Lectura</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.lectura }}
+                  </td>
+                </ng-container>
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumnsIdioma"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumnsIdioma"
+                ></tr>
+              </table>
+              <div *ngIf="!noInformacionIdioma" class="row text-center mt-3">
+                <div class="col">
+                  <h6 class="font-usco-default font-usco-gr">
+                    Espacio para la visualización de la información.
+                  </h6>
+                </div>
+              </div>
+              <div *ngIf="!precargaIdioma" class="row text-center mt-3">
+                <div class="col">
+                  <img src="assets/precarga-usco.gif" alt="USCO" />
+                </div>
+              </div>
+              <div *ngIf="!precargaIdioma" class="row text-center mt-3 mb-3">
+                <div class="col">
+                  <h5 class="font-usco-default font-usco-gr">
+                    Estamos procesando la información
+                    <span
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  </h5>
+                </div>
+              </div>
+              <mat-paginator
+                #MatPaginatorIdioma="matPaginator"
+                [pageSizeOptions]="[5, 10, 15]"
+                showFirstLastButtons
+              ></mat-paginator>
+              <div class="row">
+                <div class="col text-right">
+                  <button
+                    class="btn btn-success"
+                    [disabled]="(dataIdioma | json) == '[]'"
+                    (click)="exportToExcelIdioma()"
+                  >
+                    <i class="fa-solid fa-download"></i> Descargar reporte
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card rounded-2 p-0 shadow-sm mt-5">
+    <div
+      class="card-header ml-4 mb-3 mr-4 cursor-select"
+      [routerLink]="['/reportes']"
+      routerLinkActive="router-link-active"
+    >
+      <h4 class="font-usco-default">Reporte habilidades informáticas</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <form class="pl-4 pr-4">
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Rango de fechas
+              </legend>
+              <div class="row mt-4">
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      color="accent"
+                      class="example-full-width custom-input"
+                      appearance="outline"
+                    >
+                      <mat-label>Fecha de respuesta inicial</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker5"
+                        [(ngModel)]="fechaInicioInformatica"
+                        name="fechaInicioInformatica"
+                      />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker5"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker5 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      color="accent"
+                      class="example-full-width custom-input"
+                      appearance="outline"
+                    >
+                      <mat-label>Fecha de respuesta final</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker6"
+                        [(ngModel)]="fechaFinInformatica"
+                        name="fechaFinInformatica"
+                      />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker6"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker6 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-2 mt-2 text-center">
+                  <button
+                    class="btn btn-info"
+                    [disabled]="!fechaInicioInformatica || !fechaFinInformatica"
+                    (click)="obtenerReporteHabilidadesInformaticas()"
+                  >
+                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">Resultados</legend>
+              <div class="row ml-5 mr-5 pl-5 pr-5">
+                <div class="col">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>Campo de búsqueda</mat-label>
+                      <input
+                        matInput
+                        (keyup)="filtrarHabilidadesInformaticas($event)"
+                        #input
+                        maxlength="50"
+                        type="text"
+                        required
+                      />
+                      <button matSuffix mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                      </button>
+                      <mat-hint align="end"
+                        >{{ input.value.length }}/50</mat-hint
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <table
+                mat-table
+                [dataSource]="dataSourceHabilidadInformatica"
+                class="table"
+              >
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef>N°</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    class="font-sm-usco"
+                  >
+                    {{
+                      dataSourceHabilidadInformatica.filteredData.indexOf(
+                        element
+                      ) + 1
+                    }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef>Egresado</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.personaNombre | uppercase }}
+                    {{ element.personaApellido | uppercase }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="programa">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Programa informático
+                  </th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.nombrePrograma | uppercase }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="dominio">
+                  <th mat-header-cell *matHeaderCellDef>Dominio</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.dominio | uppercase }}
+                  </td>
+                </ng-container>
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumnsHabilidadInformatica"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="
+                    let row;
+                    columns: displayedColumnsHabilidadInformatica
+                  "
+                ></tr>
+              </table>
+              <div
+                *ngIf="!noInformacionInformatica"
+                class="row text-center mt-3"
+              >
+                <div class="col">
+                  <h6 class="font-usco-default font-usco-gr">
+                    Espacio para la visualización de la información.
+                  </h6>
+                </div>
+              </div>
+              <div *ngIf="!precargaInformatica" class="row text-center mt-3">
+                <div class="col">
+                  <img src="assets/precarga-usco.gif" alt="USCO" />
+                </div>
+              </div>
+              <div
+                *ngIf="!precargaInformatica"
+                class="row text-center mt-3 mb-3"
+              >
+                <div class="col">
+                  <h5 class="font-usco-default font-usco-gr">
+                    Estamos procesando la información
+                    <span
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                  </h5>
+                </div>
+              </div>
+              <mat-paginator
+                #MatPaginatorHabilidadInformatica="matPaginator"
+                [pageSizeOptions]="[5, 10, 15]"
+                showFirstLastButtons
+              ></mat-paginator>
+              <div class="row">
+                <div class="col text-right">
+                  <button
+                    class="btn btn-success"
+                    [disabled]="(dataHabilidadInformatica | json) == '[]'"
+                    (click)="exportToExcelHabilidadInformatica()"
+                  >
+                    <i class="fa-solid fa-download"></i> Descargar reporte
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

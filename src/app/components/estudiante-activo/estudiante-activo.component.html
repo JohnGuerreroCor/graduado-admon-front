@@ -1,0 +1,133 @@
+<app-navbar>
+  <div id="content-wrap" class="container mt-3 text-center">
+    <div class="card rounded-2 p-0 shadow-sm mt-5">
+      <div
+        class="card-header text-center ml-4 mr-4 cursor-select"
+        [routerLink]="['/inicio']"
+        routerLinkActive="router-link-active"
+      >
+        <h4 class="font-usco-default">
+          <strong
+            >Estudiante <span class="btn btn-success">Activo</span> /
+            <span class="btn btn-danger">Inactivo</span></strong
+          >
+        </h4>
+      </div>
+      <div class="card-body ls">
+        <div class="row">
+          <div class="col">
+            <form class="pl-4 pr-4">
+              <div class="row text-left mb-3">
+                <div class="col">
+                  <h5 class="font-usco-vt font-weight-bold">
+                    Datos del Estudiante
+                  </h5>
+                  <hr class="hr-usco-vt" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="row">
+                    <div class="col">
+                      <img
+                        src="assets/carnet-f.png"
+                        alt="usco"
+                        class="img-fluid foto-usco-borde"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col text-left">
+                      <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="outline"
+                        >
+                          <mat-label class="font-weight-bold font-usco-default"
+                            >Tipo de Indentificación:</mat-label
+                          >
+                          <input matInput value="Cédula ciudadanía" readonly />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col text-left">
+                      <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="outline"
+                        >
+                          <mat-label class="font-weight-bold font-usco-default"
+                            >Identificación:</mat-label
+                          >
+                          <input matInput value="1075303330" readonly />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col text-left">
+                      <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="outline"
+                        >
+                          <mat-label class="font-weight-bold font-usco-default"
+                            >Nombre(s):</mat-label
+                          >
+                          <input matInput value="JOHN DAVID" readonly />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col text-left">
+                      <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="outline"
+                        >
+                          <mat-label class="font-weight-bold font-usco-default"
+                            >Apellido(s):</mat-label
+                          >
+                          <input matInput value="GUERRERO CÓRDOBA" readonly />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col text-left">
+                      <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="outline"
+                        >
+                          <mat-label class="font-weight-bold font-usco-default"
+                            >Programa adscrito:</mat-label
+                          >
+                          <input matInput value="PROGRAMA" readonly />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col text-left">
+                      <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="outline"
+                        >
+                          <mat-label class="font-weight-bold font-usco-default"
+                            >Matrícula:</mat-label
+                          >
+                          <input matInput value="TIPO MATRICULA" readonly />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-navbar>

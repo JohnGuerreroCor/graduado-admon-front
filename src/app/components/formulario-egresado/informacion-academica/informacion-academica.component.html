@@ -1,0 +1,301 @@
+<div id="content-wrap" class="container mt-3 mb-5 text-center" #target>
+  <div class="card rounded-2 p-0 shadow-sm mt-5">
+    <div
+      class="card-header ml-4 mb-3 mr-4 cursor-select"
+      [routerLink]="['/egresado']"
+      routerLinkActive="router-link-active"
+    >
+      <h4 class="font-usco-default">Información Académica</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <form class="pl-4 pr-4">
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Información de grado
+              </legend>
+              <div class="row mt-4">
+                <div class="col" *ngIf="(graduado | json) != '[]'">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>Profesión</mat-label>
+                      <input
+                        matInput
+                        [value]="graduado[0].programa.nombreCorto"
+                        readonly
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col" *ngIf="(graduado | json) == '[]'">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>Profesión</mat-label>
+                      <input matInput readonly />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col" *ngIf="(graduado | json) != '[]'">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label
+                        >Fecha de Grado (Campo reservado para Registro y
+                        Control)</mat-label
+                      >
+                      <input
+                        matInput
+                        [value]="graduado[0].fechaGrado | date : 'dd/MM/yyyy'"
+                        readonly
+                      />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col" *ngIf="(graduado | json) == '[]'">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label
+                        >Fecha de Grado (Campo reservado para Registro y
+                        Control)</mat-label
+                      >
+                      <input matInput readonly />
+                      <mat-hint>Día/Mes/Año</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col" *ngIf="(graduado | json) != '[]'">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>Título Trabajo de Grado</mat-label>
+                      <input
+                        matInput
+                        type="text"
+                        [value]="datosComplementarios[0].modalidad"
+                        readonly
+                      />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col" *ngIf="(graduado | json) == '[]'">
+                  <div class="form-group">
+                    <mat-form-field
+                      class="example-full-width"
+                      appearance="outline"
+                    >
+                      <mat-label>Título Trabajo de Grado</mat-label>
+                      <input matInput type="text" readonly />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Otros estudios realizados
+              </legend>
+              <table
+                mat-table
+                [dataSource]="dataSourceRegistroEducativo"
+                class="table"
+              >
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef>N°</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    class="font-sm-usco"
+                  >
+                    {{
+                      dataSourceRegistroEducativo.filteredData.indexOf(
+                        element
+                      ) + 1
+                    }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef>Nombre del Estudio</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.titulo }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="nivel">
+                  <th mat-header-cell *matHeaderCellDef>Nivel académico</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.nivelAcademico }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="fecha">
+                  <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.fechaFin | date : "dd/MM/yyyy" }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="entidad">
+                  <th mat-header-cell *matHeaderCellDef>Entidad</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.institucion }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="titulo">
+                  <th mat-header-cell *matHeaderCellDef>Titulo obtenido</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    <span *ngIf="element.finalizado == 1">SI</span>
+                    <span *ngIf="element.finalizado == 2">NO</span>
+                  </td>
+                </ng-container>
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumnsRegistroEducativo"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="
+                    let row;
+                    columns: displayedColumnsRegistroEducativo
+                  "
+                ></tr>
+              </table>
+              <mat-paginator
+                [pageSizeOptions]="[5, 10, 15]"
+                showFirstLastButtons
+              ></mat-paginator>
+            </fieldset>
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Idiomas que domina
+              </legend>
+              <table mat-table [dataSource]="dataSourceIdioma" class="table">
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef>N°</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    class="font-sm-usco"
+                  >
+                    {{ dataSourceIdioma.filteredData.indexOf(element) + 1 }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="programa">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Programa informático
+                  </th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.nombrePrograma }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="idioma">
+                  <th mat-header-cell *matHeaderCellDef>Idioma</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.nombre }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="conversacion">
+                  <th mat-header-cell *matHeaderCellDef>Conversacion</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.conversacion }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="escritura">
+                  <th mat-header-cell *matHeaderCellDef>Escritura</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.escritura }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="lectura">
+                  <th mat-header-cell *matHeaderCellDef>Lectura</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.lectura }}
+                  </td>
+                </ng-container>
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumnsIdioma"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumnsIdioma"
+                ></tr>
+              </table>
+              <mat-paginator
+                [pageSizeOptions]="[5, 10, 15]"
+                showFirstLastButtons
+              ></mat-paginator>
+            </fieldset>
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Habilidades informáticas
+              </legend>
+              <table
+                mat-table
+                [dataSource]="dataSourceHabilidadInformatica"
+                class="table"
+              >
+                <ng-container matColumnDef="index">
+                  <th mat-header-cell *matHeaderCellDef>N°</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element; let i = index"
+                    class="font-sm-usco"
+                  >
+                    {{
+                      dataSourceHabilidadInformatica.filteredData.indexOf(
+                        element
+                      ) + 1
+                    }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="programa">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Programa informático
+                  </th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.nombrePrograma }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="dominio">
+                  <th mat-header-cell *matHeaderCellDef>Dominio</th>
+                  <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                    {{ element.dominio }}
+                  </td>
+                </ng-container>
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumnsHabilidadInformatica"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="
+                    let row;
+                    columns: displayedColumnsHabilidadInformatica
+                  "
+                ></tr>
+              </table>
+              <mat-paginator
+                [pageSizeOptions]="[5, 10, 15]"
+                showFirstLastButtons
+              ></mat-paginator>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

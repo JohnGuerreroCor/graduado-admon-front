@@ -1,0 +1,43 @@
+<div id="content-wrap" class="container mt-3 mb-5 text-center" #target>
+  <div class="card rounded-2 p-0 shadow-sm mt-5">
+    <div
+      class="card-header ml-4 mb-3 mr-4 cursor-select"
+      [routerLink]="['/inicio']"
+      routerLinkActive="router-link-active"
+    >
+      <h4 class="font-usco-default">
+        <strong>Expectativas de capacitación y formación</strong>
+      </h4>
+    </div>
+    <div class="card-body ls">
+      <div class="row">
+        <div class="col">
+          <fieldset class="scheduler-border shadow-sm">
+            <legend class="scheduler-border font-usco-vt">
+              Satisfacción de las competencias
+            </legend>
+            <div
+              class="row"
+              *ngFor="let respuestas of listadoRespuestas; let i = index"
+            >
+              <div class="col text-left">
+                <div class="form-group">
+                  <small class="font-usco-bl font-usco-default font-weight-bold"
+                    >{{ i + 1 }}).{{ respuestas.pregunta }}</small
+                  ><br />
+                  <br />
+                  <mat-form-field
+                    class="example-full-width"
+                    appearance="outline"
+                  >
+                    <input matInput [value]="respuestas.respuesta" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,281 @@
+<app-navbar>
+  <div id="content-wrap" class="container mt-3 text-center">
+    <div class="card rounded-2 p-0 shadow-sm mt-5 mb-5">
+      <div
+        class="card-header text-center ml-4 mr-4 cursor-select"
+        [routerLink]="['/inicio']"
+        routerLinkActive="router-link-active"
+      >
+        <h4 class="font-usco-default">Graduado</h4>
+      </div>
+      <div class="card-body ls">
+        <div *ngIf="foto.url == '' && (graduado | json) == '[]'" class="row">
+          <div class="col">
+            <i class="fa-solid fa-user-slash fa-5x"></i>
+          </div>
+        </div>
+        <div *ngIf="foto.url != '' || (graduado | json) != '[]'" class="row">
+          <div class="col">
+            <fieldset class="scheduler-border shadow-sm">
+              <legend class="scheduler-border font-usco-vt">
+                Datos de contacto
+              </legend>
+              <form [formGroup]="formGraduado">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="row">
+                      <div class="col">
+                        <img
+                          *ngIf="foto.url != ''"
+                          [src]="foto.url"
+                          alt="usco"
+                          class="img-thumbnail foto-usco-borde"
+                        />
+                        <img
+                          *ngIf="foto.url == ''"
+                          src="assets/precarga-usco.gif"
+                          alt="usco"
+                          class="img-thumbnail foto-usco-borde"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row">
+                      <div class="col text-left">
+                        <div class="form-group">
+                          <mat-form-field
+                            class="example-full-width"
+                            appearance="outline"
+                          >
+                            <mat-label
+                              class="font-weight-bold font-usco-default"
+                              >Tipo de Indentificación:</mat-label
+                            >
+                            <input
+                              matInput
+                              formControlName="tipoDocumento"
+                              readonly
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col text-left">
+                        <div class="form-group">
+                          <mat-form-field
+                            class="example-full-width"
+                            appearance="outline"
+                          >
+                            <mat-label
+                              class="font-weight-bold font-usco-default"
+                              >Identificación:</mat-label
+                            >
+                            <input
+                              matInput
+                              formControlName="identificacion"
+                              readonly
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-left">
+                        <div class="form-group">
+                          <mat-form-field
+                            class="example-full-width"
+                            appearance="outline"
+                          >
+                            <mat-label
+                              class="font-weight-bold font-usco-default"
+                              >Fecha de expedición:</mat-label
+                            >
+                            <input
+                              matInput
+                              formControlName="fechaExpedicion"
+                              readonly
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col text-left">
+                        <div class="form-group">
+                          <mat-form-field
+                            class="example-full-width"
+                            appearance="outline"
+                          >
+                            <mat-label
+                              class="font-weight-bold font-usco-default"
+                              >Lugar de expedición:</mat-label
+                            >
+                            <input
+                              matInput
+                              formControlName="lugarExpedicion"
+                              readonly
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col text-left">
+                        <div class="form-group">
+                          <mat-form-field
+                            class="example-full-width"
+                            appearance="outline"
+                          >
+                            <mat-label
+                              class="font-weight-bold font-usco-default"
+                              >Nombre(s):</mat-label
+                            >
+                            <input matInput formControlName="nombre" readonly />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col text-left">
+                        <div class="form-group">
+                          <mat-form-field
+                            class="example-full-width"
+                            appearance="outline"
+                          >
+                            <mat-label
+                              class="font-weight-bold font-usco-default"
+                              >Apellido(s):</mat-label
+                            >
+                            <input
+                              matInput
+                              formControlName="apellido"
+                              readonly
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col text-left">
+                    <div class="form-group">
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="outline"
+                      >
+                        <mat-label class="font-weight-bold font-usco-default"
+                          >Correo personal:</mat-label
+                        >
+                        <input matInput formControlName="correo" readonly />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col text-left">
+                    <div class="form-group">
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="outline"
+                      >
+                        <mat-label class="font-weight-bold font-usco-default"
+                          >Teléfono fijo:</mat-label
+                        >
+                        <input
+                          matInput
+                          formControlName="telefonoFijo"
+                          readonly
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col text-left">
+                    <div class="form-group">
+                      <mat-form-field
+                        class="example-full-width"
+                        appearance="outline"
+                      >
+                        <mat-label class="font-weight-bold font-usco-default"
+                          >Teléfono móvil:</mat-label
+                        >
+                        <input
+                          matInput
+                          formControlName="telefonoMovil"
+                          readonly
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </fieldset>
+          </div>
+        </div>
+        <fieldset class="scheduler-border shadow-sm">
+          <legend class="scheduler-border font-usco-vt">
+            Programas adscrito
+          </legend>
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            class="table table-hover shadow"
+          >
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef>N°</th>
+              <td
+                mat-cell
+                *matCellDef="let element; let i = index"
+                class="font-sm-usco"
+              >
+                {{ dataSource.filteredData.indexOf(element) + 1 }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="codigo">
+              <th mat-header-cell *matHeaderCellDef>Código</th>
+              <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                {{ element.codigo }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="programa">
+              <th mat-header-cell *matHeaderCellDef>Programa</th>
+              <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                {{ element.programa.nombrePrograma }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="nivelAcademico">
+              <th mat-header-cell *matHeaderCellDef>Nivel académico</th>
+              <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                {{ element.programa.nivelAcademico }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="sede">
+              <th mat-header-cell *matHeaderCellDef>Sede</th>
+              <td mat-cell *matCellDef="let element" class="font-sm-usco">
+                {{ element.programa.sede }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="fechaGrado">
+              <th mat-header-cell *matHeaderCellDef>Fecha de grado</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.fechaGrado | date : "dd/MM/yyyy" }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator
+            [pageSizeOptions]="[10, 20, 30]"
+            showFirstLastButtons
+          ></mat-paginator>
+          <div class="row">
+            <div class="col text-right">
+              <button
+                class="btn btn-usco-vt"
+                *ngIf="estudianteActivo"
+                [routerLink]="['/encuesta-seguimiento', identificacion]"
+                routerLinkActive="router-link-active"
+              >
+                Ver Encuesta
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</app-navbar>

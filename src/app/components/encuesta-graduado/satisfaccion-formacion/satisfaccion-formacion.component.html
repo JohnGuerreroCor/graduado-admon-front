@@ -1,0 +1,109 @@
+<div class="container mt-3 mb-5 text-center">
+  <div class="card rounded-2 p-0 shadow-sm mt-5">
+    <div
+      class="card-header ml-4 mb-3 mr-4 cursor-select"
+      [routerLink]="['/inicio']"
+      routerLinkActive="router-link-active"
+    >
+      <h4 class="font-usco-default">Satisfacción con la formación</h4>
+    </div>
+    <div class="card-body ls">
+      <div class="row">
+        <div class="col">
+          <fieldset class="scheduler-border shadow-sm">
+            <legend class="scheduler-border font-usco-vt">Competencias generales</legend>
+            <table class="table table-hover text-left font-usco-default">
+              <thead class="thead-dark">
+                <tr style="font-size: 12px">
+                  <th scope="col">Competencias</th>
+                  <th scope="col">Muy insatisfecho</th>
+                  <th scope="col">Insatisfecho</th>
+                  <th scope="col">Satisfecho</th>
+                  <th scope="col">Muy satisfecho</th>
+                </tr>
+              </thead>
+              <tbody style="font-size: 12px" class="text-left">
+                <tr
+                  *ngFor="
+                    let copetenciaUno of listadoRespuestasUno;
+                    let i = index
+                  "
+                >
+                  <th scope="row">
+                    {{ i + 1 }}). {{ copetenciaUno.pregunta }}
+                  </th>
+                  <td *ngFor="let option of options">
+                    <mat-radio-group>
+                      <mat-radio-button
+                        [checked]="copetenciaUno.respuestaCodigo === option"
+                        [value]="option"
+                      >
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+          <fieldset class="scheduler-border shadow-sm">
+            <legend class="scheduler-border font-usco-vt">Competencias laborales generales</legend>
+            <table class="table table-hover text-left font-usco-default">
+              <thead class="thead-dark">
+                <tr style="font-size: 12px">
+                  <th scope="col">Competencias</th>
+                  <th scope="col">Muy insatisfecho</th>
+                  <th scope="col">Insatisfecho</th>
+                  <th scope="col">Satisfecho</th>
+                  <th scope="col">Muy satisfecho</th>
+                </tr>
+              </thead>
+              <tbody style="font-size: 12px" class="text-left">
+                <tr
+                  *ngFor="
+                    let copetenciaDos of listadoRespuestasDos;
+                    let i = index
+                  "
+                >
+                  <th scope="row">
+                    {{ i + 1 }}). {{ copetenciaDos.pregunta }}
+                  </th>
+                  <td *ngFor="let option of options">
+                    <mat-radio-group>
+                      <mat-radio-button
+                        [checked]="copetenciaDos.respuestaCodigo === option"
+                        [value]="option"
+                      >
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+          <fieldset class="scheduler-border shadow-sm">
+            <legend class="scheduler-border font-usco-vt">Satisfacción de las competencias</legend>
+            <div
+              class="row"
+              *ngFor="let respuestas of listadoRespuestasTres; let i = index"
+            >
+              <div class="col text-left">
+                <div class="form-group">
+                  <small class="font-usco-bl font-usco-default font-weight-bold"
+                    >{{ i + 24 }}).{{ respuestas.pregunta }}</small
+                  ><br />
+                  <br />
+                  <mat-form-field
+                    class="example-full-width"
+                    appearance="outline"
+                  >
+                    <input matInput [value]="respuestas.respuesta" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
