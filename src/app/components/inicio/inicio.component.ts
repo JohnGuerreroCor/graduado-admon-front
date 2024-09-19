@@ -10,6 +10,33 @@ import Swal from 'sweetalert2';
   styleUrls: ['./inicio.component.css'],
 })
 export class InicioComponent implements OnInit {
+  links = [
+    {
+      titulo: 'Encuestas',
+      ruta: '/encuestas',
+      icono: 'fa-solid fa-file-pen fa-8x p-4 text-center color-icon color-icon',
+      info: 'Lectura con cámara del qr para la identificación del usuario a ingresar o salir a la institución y registro manual para casos excepcionales.',
+    },
+    {
+      titulo: 'Tasa de graduación',
+      ruta: '/tasa-graduacion',
+      icono: 'fa-solid fa-chart-pie fa-8x p-4 text-center color-icon',
+      info: 'Generación de tiquetes de acceso para las personas externas a la institución.',
+    },
+    {
+      titulo: 'Puesto de votación',
+      ruta: '/puesto-votacion',
+      icono: 'fa-solid fa-check-to-slot fa-8x p-4 text-center color-icon',
+      info: 'Generación de tiquetes de acceso para las personas externas a la institución.',
+    },
+    {
+      titulo: 'Reportes',
+      ruta: '/reportes',
+      icono: 'fa-solid fa-chart-simple fa-8x p-4 text-center color-icon',
+      info: 'Generación de tiquetes de acceso para las personas externas a la institución.',
+    },
+  ];
+
   anio!: number;
   fecha = new Date();
   url: string = environment.URL_BACKEND;

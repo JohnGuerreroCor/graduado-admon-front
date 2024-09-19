@@ -47,10 +47,10 @@ export class DatosPersonalesService {
     return false;
   }
 
-  obtenerDatosPersonales(codigo: string): Observable<DatosPersonales[]> {
+  obtenerDatosPersonales(id: string): Observable<DatosPersonales[]> {
     return this.http
       .get<DatosPersonales[]>(
-        `${this.url}/obtener-datos-personales/${codigo}/${this.userLogeado}`,
+        `${this.url}/obtener-datos-personales/${id}`,
         {
           headers: this.aggAutorizacionHeader(),
         }
@@ -67,12 +67,9 @@ export class DatosPersonalesService {
 
   obtenerTiposIdentificacion(): Observable<IdentificacionTipos[]> {
     return this.http
-      .get<IdentificacionTipos[]>(
-        `${this.url}/obtener-tipos-identificacion/${this.userLogeado}`,
-        {
-          headers: this.aggAutorizacionHeader(),
-        }
-      )
+      .get<IdentificacionTipos[]>(`${this.url}/obtener-tipos-identificacion`, {
+        headers: this.aggAutorizacionHeader(),
+      })
       .pipe(
         catchError((e) => {
           if (this.isNoAutorizado(e)) {
@@ -85,12 +82,9 @@ export class DatosPersonalesService {
 
   obtenerEstadosCivil(): Observable<EstadoCivil[]> {
     return this.http
-      .get<EstadoCivil[]>(
-        `${this.url}/obtener-estados-civil/${this.userLogeado}`,
-        {
-          headers: this.aggAutorizacionHeader(),
-        }
-      )
+      .get<EstadoCivil[]>(`${this.url}/obtener-estados-civil`, {
+        headers: this.aggAutorizacionHeader(),
+      })
       .pipe(
         catchError((e) => {
           if (this.isNoAutorizado(e)) {
@@ -103,12 +97,9 @@ export class DatosPersonalesService {
 
   obtenerGruposSanguineos(): Observable<GrupoSanguineo[]> {
     return this.http
-      .get<GrupoSanguineo[]>(
-        `${this.url}/obtener-grupos-sanguineos/${this.userLogeado}`,
-        {
-          headers: this.aggAutorizacionHeader(),
-        }
-      )
+      .get<GrupoSanguineo[]>(`${this.url}/obtener-grupos-sanguineos`, {
+        headers: this.aggAutorizacionHeader(),
+      })
       .pipe(
         catchError((e) => {
           if (this.isNoAutorizado(e)) {
